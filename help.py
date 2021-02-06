@@ -70,11 +70,11 @@ async def send_help(bot, ev: CQEvent):
     bundles = Service.get_bundles()
     svs = Service.get_loaded_services()
     info = Service.get_help()
-    if name in svs:
+    if not name:
+        await bot.send(ev, TOP_MANUAL)
+    elif name in svs:
         msg = get_service_help(name, info[name])
         await bot.send(ev, msg)
-    if name in bundles:
+    elif name in bundles:
         msg = gen_bundle_manual(name, bundles[name], ev.group_id)
         await bot.send(ev, msg)
-    else:
-        await bot.send(ev, TOP_MANUAL)
