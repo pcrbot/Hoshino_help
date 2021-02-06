@@ -8,3 +8,5 @@ Improved help function.
 使用：
 
 分别替换/hoshino下的service.py和/hoshino/modules/botmanage下的help.py.
+
+若依然不够简洁可以考虑按照help里的注释使用卡片发送。
