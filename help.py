@@ -78,3 +78,36 @@ async def send_help(bot, ev: CQEvent):
     elif name in bundles:
         msg = gen_bundle_manual(name, bundles[name], ev.group_id)
         await bot.send(ev, msg)
+
+
+# 卡片版本，若还是不够简洁可以考虑注释上面的使用这个
+# @sv.on_prefix(('help', '帮助'))
+async def send_help_xml(bot, ev: CQEvent):
+    name = ev.message.extract_plain_text().strip()
+    bundles = Service.get_bundles()
+    svs = Service.get_loaded_services()
+    info = Service.get_help()
+    if not name:
+        await bot.send(ev, TOP_MANUAL)
+    elif name in svs:
+        msg = get_service_help(name, info[name])
+        data ={
+            "type": "node",
+            "data": {
+                "name": '小冰',
+                "uin": '2854196306',
+                "content": msg
+            }
+            }
+        await bot.send_group_forward_msg(group_id=ev.group_id, messages=data)
+    elif name in bundles:
+        msg = gen_bundle_manual(name, bundles[name], ev.group_id)
+        data ={
+            "type": "node",
+            "data": {
+                "name": '小冰',
+                "uin": '2854196306',
+                "content": msg
+            }
+            }
+        await bot.send_group_forward_msg(group_id=ev.group_id, messages=data)
